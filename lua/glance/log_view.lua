@@ -85,8 +85,6 @@ function M.new(headers, message, commits, comments)
 		buffer = nil,
 	}
 
-	vim.notify("LogView: commit_start_line " .. commit_start_line .. " commit count " .. get_table_size(commits), vim.log.levels.INFO, {})
-
 	setmetatable(instance, { __index = M })
 
 	return instance
