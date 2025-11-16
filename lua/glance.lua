@@ -5,6 +5,7 @@ local M = {
 	config = {
 		patchdiff = "diffonly",
 		q_quit_log = "off",
+		diff_context = "3",
 	},
 }
 
@@ -26,6 +27,9 @@ function M.set_config(config)
 	if config.q_quit_log == "on" or config.q_quit_log == "off" then
 		M.config.q_quit_log = config.q_quit_log
 	end
+	if config.diff_context ~= nil then
+		M.config.diff_context = config.diff_context
+	end
 end
 
 local function do_glance_patchdiff(cmdline)
@@ -35,6 +39,11 @@ end
 
 local function do_glance_q_quit_log(cmdline)
 	local config = { q_quit_log = string.gsub(cmdline, "%s*(.-)%s*", "%1") }
+	M.set_config(config)
+end
+
+local function do_glance_diff_context(cmdline)
+	local config = { diff_context = string.gsub(cmdline, "%s*(.-)%s*", "%1") }
 	M.set_config(config)
 end
 
@@ -48,6 +57,8 @@ local function do_glance_command(user_opts)
 		sub_cmd = do_glance_patchdiff
 	elseif sub_cmd_str == "q_quit_log" then
 		sub_cmd = do_glance_q_quit_log
+	elseif sub_cmd_str == "diff_context" then
+		sub_cmd = do_glance_diff_context
 	else
 		return
 	end
